@@ -1,0 +1,35 @@
+>>> channels = response.css('section.channel')
+>>> channels[1].css('a span.channel-name::text').get()
+'RaiDue'
+
+>>> channels[2].css('img::attr(data-src)').get()
+'https://immagini.quotidiano.net/?url=https%3A%2F%2Fs3.eu-west-1.amazonaws.com%2Fstatic.guidatv.quotidiano.net%2Fimg%2Floghi_tv%2Frai_3.png&w=100&h=100&mode=fill&bg=ffffff'
+
+>>> channels[1].css('a::attr(href)').get()
+'/rai_2/'
+
+GuidaTV
+
+>>> response.css('div.programs a::attr(title)').get()
+'RaiNews24'
+>>> response.css('div.programs div.hour::text').get()
+'06:00'
+>>> response.css('div.programs div.program-category::text').get()
+'Informazione'
+
+>>> response.css('div.day-number a::attr(href)').getall()
+['/27-05-2020/', '/28-05-2020/', '/29-05-2020/', '/30-05-2020/', '/31-05-2020/', '/01-06-2020/', '/02-06-2020/']
+
+    def urlsForDate(self, date):
+        url = 'https://guidatv.quotidiano.net/'
+        days = []
+        for i in range(-3,4):
+            d = date + datetime.timedelta(days=i)
+            days.append(d)
+        
+        urls = []
+        for d in days:
+            day_url = url + d.strftime("%d-%m-%Y")
+            urls.append(day_url)
+        
+        return urls
